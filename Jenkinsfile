@@ -1,54 +1,20 @@
 pipeline {
-    agent any
-
-    triggers {
-        pollSCM('H/5 * * * *') // Poll GitHub repository every 5 minutes
-    }
-
-    environment {
-        GITHUB_REPO = 'https://github.com/kanchaka-manupriya/XYZ-Technologies.git' // Replace with your GitHub repository URL
-    }
+    agent { label 'slave1' }
 
     stages {
-        stage('Checkout') {
-            steps {
-                git branch: 'main', url: "${env.GITHUB_REPO}" // Checkout the main branch from your GitHub repository
-            }
-        }
-
         stage('Compile') {
             steps {
-                script {
-                    def compileJob = build job: 'compile', propagate: false
-                    if (compileJob.result != 'SUCCESS') {
-                        currentBuild.result = 'FAILURE'
-                        error('Compile job failed')
-                    }
-                }
+                build job: 'compile'
             }
         }
-
         stage('Test') {
             steps {
-                script {
-                    def testJob = build job: 'test', propagate: false
-                    if (testJob.result != 'SUCCESS') {
-                        currentBuild.result = 'FAILURE'
-                        error('Test job failed')
-                    }
-                }
+                build job: 'test'
             }
         }
-
         stage('Package') {
             steps {
-                script {
-                    def packageJob = build job: 'package', propagate: false
-                    if (packageJob.result != 'SUCCESS') {
-                        currentBuild.result = 'FAILURE'
-                        error('Package job failed')
-                    }
-                }
+                build job: 'package'
             }
         }
     }
