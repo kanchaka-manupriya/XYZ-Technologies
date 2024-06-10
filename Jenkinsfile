@@ -6,7 +6,7 @@ pipeline {
     }
 
     environment {
-        GITHUB_REPO = 'https://github.com/your-username/your-repo.git' // Replace with your GitHub repository URL
+        GITHUB_REPO = 'https://github.com/kanchaka-manupriya/XYZ-Technologies.git' // Replace with your GitHub repository URL
     }
 
     stages {
