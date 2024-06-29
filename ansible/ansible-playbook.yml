@@ -1,0 +1,61 @@
+---
+- name: Playbook to create docker image and push it to DockerHub on Ansible Server
+  hosts: localhost
+  become: true
+
+  vars:
+    image_name: "kanchakamanupriya/xyztechnologies"
+    image_tag: "latest"
+    dockerfile_path: "/opt/war_file"
+    dockerhub_username: "kanchakamanupriya"
+
+  tasks:
+
+   - name: Remove existing image
+     command: docker image rm "{{ image_name }}":"{{ image_tag }}"
+     ignore_errors: yes
+
+   - name: Build docker image
+     community.docker.docker_image:
+        build:
+          path: "{{ dockerfile_path }}"
+        name: "{{ image_name }}"
+        tag: "{{ image_tag }}"
+        push: true
+        source: build
+     register: out
+   - debug:
+        var: out
+
+- name: Playbook to pull docker image from Dockerhub and Deploy it on Tomcat Server
+  hosts: tomcat
+
+  vars:
+    image_name: "kanchakamanupriya/xyztechnologies"
+    image_tag: "latest"
+    dockerfile_path: "/opt/war_file"
+    dockerhub_username: "kanchakamanupriya"
+    container_name: "xyztechnologies-ansible-deploy"
+
+  tasks:
+
+   - name: Stop and remove existing container and images
+     command: docker container stop "{{ container_name }}"
+     command: docker container rm "{{ container_name }}"
+     command: docker image rm  "{{ image_name }}":"{{ image_tag }}"
+     ignore_errors: yes
+
+   - name: Pull docker image
+     community.docker.docker_image:
+        name: "{{ image_name }}"
+        tag: "{{ image_tag }}"
+        source: pull
+
+   - name: Deploy the container to Tomcat server
+     community.docker.docker_container:
+        name: "{{ container_name }}"
+        image: "{{ image_name }}:{{ image_tag }}"
+        state: started
+        ports:
+          - 8092:8080
+
