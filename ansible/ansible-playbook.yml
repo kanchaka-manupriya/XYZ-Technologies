@@ -27,35 +27,77 @@
    - debug:
         var: out
 
-- name: Playbook to pull docker image from Dockerhub and Deploy it on Tomcat Server
+# - name: Playbook to pull docker image from Dockerhub and Deploy it on Tomcat Server
+#   hosts: tomcat
+
+#   vars:
+#     image_name: "kanchakamanupriya/xyztechnologies"
+#     image_tag: "latest"
+#     dockerfile_path: "/opt/war_file"
+#     dockerhub_username: "kanchakamanupriya"
+#     container_name: "xyztechnologies-ansible-deploy"
+
+#   tasks:
+
+#    - name: Stop and remove existing container and images
+#      command: docker container stop "{{ container_name }}"
+#      command: docker container rm "{{ container_name }}"
+#      command: docker image rm  "{{ image_name }}":"{{ image_tag }}"
+#      ignore_errors: yes
+
+#    - name: Pull docker image
+#      community.docker.docker_image:
+#         name: "{{ image_name }}"
+#         tag: "{{ image_tag }}"
+#         source: pull
+
+#    - name: Deploy the container to Tomcat server
+#      community.docker.docker_container:
+#         name: "{{ container_name }}"
+#         image: "{{ image_name }}:{{ image_tag }}"
+#         state: started
+#         ports:
+#           - 8092:8080
+
+- name: Playbook to pull docker image from DockerHub and deploy it on Tomcat server
   hosts: tomcat
 
   vars:
     image_name: "kanchakamanupriya/xyztechnologies"
     image_tag: "latest"
-    dockerfile_path: "/opt/war_file"
     dockerhub_username: "kanchakamanupriya"
     container_name: "xyztechnologies-ansible-deploy"
 
   tasks:
+    - name: Stop existing container
+      community.docker.docker_container:
+        name: "{{ container_name }}"
+        state: stopped
+      ignore_errors: yes
 
-   - name: Stop and remove existing container and images
-     command: docker container stop "{{ container_name }}"
-     command: docker container rm "{{ container_name }}"
-     command: docker image rm  "{{ image_name }}":"{{ image_tag }}"
-     ignore_errors: yes
+    - name: Remove existing container
+      community.docker.docker_container:
+        name: "{{ container_name }}"
+        state: absent
+      ignore_errors: yes
 
-   - name: Pull docker image
-     community.docker.docker_image:
+    - name: Remove existing image
+      community.docker.docker_image:
+        name: "{{ image_name }}"
+        tag: "{{ image_tag }}"
+        state: absent
+      ignore_errors: yes
+
+    - name: Pull docker image
+      community.docker.docker_image:
         name: "{{ image_name }}"
         tag: "{{ image_tag }}"
         source: pull
 
-   - name: Deploy the container to Tomcat server
-     community.docker.docker_container:
+    - name: Deploy the container to Tomcat server
+      community.docker.docker_container:
         name: "{{ container_name }}"
         image: "{{ image_name }}:{{ image_tag }}"
         state: started
         ports:
-          - 8092:8080
-
+          - "8092:8080"
