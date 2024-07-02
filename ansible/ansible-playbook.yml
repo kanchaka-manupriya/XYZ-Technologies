@@ -74,23 +74,45 @@
 
 
 
+
 - name: Deploy to Kubernetes
   hosts: kubemaster
   become: true
   tasks:
+
+    - name: Delete existing Kubernetes Pod
+      kubernetes.core.k8s:
+        state: absent
+        kubeconfig: /etc/kubernetes/admin.conf
+        definition: "{{ lookup('file', 'pod.yml') }}"
+        ignore_errors: yes
+
+    - name: Delete existing Kubernetes Service
+      kubernetes.core.k8s:
+        state: absent
+        kubeconfig: /etc/kubernetes/admin.conf
+        definition: "{{ lookup('file', 'service.yml') }}"
+        ignore_errors: yes
+
+    - name: Delete existing Kubernetes Deployment
+      kubernetes.core.k8s:
+        state: absent
+        kubeconfig: /etc/kubernetes/admin.conf
+        definition: "{{ lookup('file', 'deployment.yml') }}"
+        ignore_errors: yes
+
+
     - name: Create Kubernetes Pod
       kubernetes.core.k8s:
         state: present
         kubeconfig: /etc/kubernetes/admin.conf
         definition: "{{ lookup('file', 'pod.yml') }}"
 
-
     - name: Create Kubernetes Service
       kubernetes.core.k8s:
         state: present
         kubeconfig: /etc/kubernetes/admin.conf
         definition: "{{ lookup('file', 'service.yml') }}"
-
 
     - name: Create Kubernetes Deployment
       kubernetes.core.k8s:
