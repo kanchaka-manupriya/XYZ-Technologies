@@ -1,0 +1,13 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: xyztechnologies-pod
+  namespace: default
+  labels:
+    app: xyztechnologies
+spec:
+  containers:
+  - name: xyztechnologies-container
+    image: kanchakamanupriya/xyztechnologies:latest
+    ports:
+    - containerPort: 8080

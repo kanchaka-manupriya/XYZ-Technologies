@@ -71,3 +71,33 @@
         state: started
         ports:
           - "8092:8080"
+
+
+
+- name: Deploy to Kubernetes
+  hosts: kubemaster
+  become: true
+  tasks:
+    - name: Create Kubernetes Pod
+      kubernetes.core.k8s:
+        state: present
+        kubeconfig: /etc/kubernetes/admin.conf
+        definition: "{{ lookup('file', 'pod.yml') }}"
+        force: true
+
+    - name: Create Kubernetes Service
+      kubernetes.core.k8s:
+        state: present
+        kubeconfig: /etc/kubernetes/admin.conf
+        definition: "{{ lookup('file', 'service.yml') }}"
+        force: true
+
+    - name: Create Kubernetes Deployment
+      kubernetes.core.k8s:
+        state: present
+        kubeconfig: /etc/kubernetes/admin.conf
+        definition: "{{ lookup('file', 'deployment.yml') }}"
+        force: true
+
+
+
