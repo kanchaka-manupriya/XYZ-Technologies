@@ -80,23 +80,23 @@
   become: true
   tasks:
 
-    - name: Delete existing Kubernetes Pod
-      kubernetes.core.k8s:
-        state: absent
-        kubeconfig: /etc/kubernetes/admin.conf
-        definition: "{{ lookup('file', 'pod.yml') }}"
+    # - name: Delete existing Kubernetes Pod
+    #   kubernetes.core.k8s:
+    #     state: absent
+    #     kubeconfig: /etc/kubernetes/admin.conf
+    #     definition: "{{ lookup('file', 'pod.yml') }}"
 
-    - name: Delete existing Kubernetes Service
-      kubernetes.core.k8s:
-        state: absent
-        kubeconfig: /etc/kubernetes/admin.conf
-        definition: "{{ lookup('file', 'service.yml') }}"
+    # - name: Delete existing Kubernetes Service
+    #   kubernetes.core.k8s:
+    #     state: absent
+    #     kubeconfig: /etc/kubernetes/admin.conf
+    #     definition: "{{ lookup('file', 'service.yml') }}"
 
-    - name: Delete existing Kubernetes Deployment
-      kubernetes.core.k8s:
-        state: absent
-        kubeconfig: /etc/kubernetes/admin.conf
-        definition: "{{ lookup('file', 'deployment.yml') }}"
+    # - name: Delete existing Kubernetes Deployment
+    #   kubernetes.core.k8s:
+    #     state: absent
+    #     kubeconfig: /etc/kubernetes/admin.conf
+    #     definition: "{{ lookup('file', 'deployment.yml') }}"
 
 
     - name: Create Kubernetes Pod

@@ -5,6 +5,7 @@ metadata:
   namespace: default
 spec:
   replicas: 3
+  minReadySeconds: 60
   strategy:
     type: RollingUpdate
     rollingUpdate:
