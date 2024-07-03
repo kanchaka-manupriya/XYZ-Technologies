@@ -97,7 +97,7 @@
         state: present
         kubeconfig: /etc/kubernetes/admin.conf
         definition: "{{ lookup('file', 'deployment.yml') }}"
-        imagePullPolicy: Always
+  
 
 
 

@@ -24,3 +24,4 @@ spec:
         image: kanchakamanupriya/xyztechnologies:latest
         ports:
         - containerPort: 8080
+        imagePullPolicy: Always
