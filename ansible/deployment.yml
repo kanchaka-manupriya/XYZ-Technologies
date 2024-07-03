@@ -21,6 +21,6 @@ spec:
     spec:
       containers:
       - name: xyztechnologies-container
-        image: kanchakamanupriya/xyztechnologies:v2
+        image: kanchakamanupriya/xyztechnologies:v3
         ports:
         - containerPort: 8080

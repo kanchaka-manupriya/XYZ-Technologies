@@ -5,7 +5,7 @@
 
   vars:
     image_name: "kanchakamanupriya/xyztechnologies"
-    image_tag: "v2"
+    image_tag: "v3"
     dockerfile_path: "/opt/war_file"
     dockerhub_username: "kanchakamanupriya"
 
