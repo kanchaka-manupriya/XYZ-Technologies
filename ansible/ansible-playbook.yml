@@ -5,7 +5,7 @@
 
   vars:
     image_name: "kanchakamanupriya/xyztechnologies"
-    image_tag: "v3"
+    image_tag: "latest"
     dockerfile_path: "/opt/war_file"
     dockerhub_username: "kanchakamanupriya"
 
@@ -80,25 +80,6 @@
   become: true
   tasks:
 
-    # - name: Delete existing Kubernetes Pod
-    #   kubernetes.core.k8s:
-    #     state: absent
-    #     kubeconfig: /etc/kubernetes/admin.conf
-    #     definition: "{{ lookup('file', 'pod.yml') }}"
-
-    # - name: Delete existing Kubernetes Service
-    #   kubernetes.core.k8s:
-    #     state: absent
-    #     kubeconfig: /etc/kubernetes/admin.conf
-    #     definition: "{{ lookup('file', 'service.yml') }}"
-
-    # - name: Delete existing Kubernetes Deployment
-    #   kubernetes.core.k8s:
-    #     state: absent
-    #     kubeconfig: /etc/kubernetes/admin.conf
-    #     definition: "{{ lookup('file', 'deployment.yml') }}"
-
-
     - name: Create Kubernetes Pod
       kubernetes.core.k8s:
         state: present
@@ -116,6 +97,7 @@
         state: present
         kubeconfig: /etc/kubernetes/admin.conf
         definition: "{{ lookup('file', 'deployment.yml') }}"
+        imagePullPolicy: Always
 
 
 
