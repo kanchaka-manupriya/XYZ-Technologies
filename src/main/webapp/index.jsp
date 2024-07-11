@@ -1,6 +1,6 @@
 <html>
 <body>
-<h2>Welcome to XYZ technologies! continous check1</h2>
+<h2>Welcome to XYZ technologies! continous check2</h2>
   <h3>This is admin Module</h3>
   <button name="Add User" value="Add User" type="button" onclick="addUser()">Add User</button>  
 <script>  
