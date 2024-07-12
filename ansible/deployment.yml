@@ -21,7 +21,7 @@ spec:
     spec:
       containers:
       - name: xyztechnologies-container
-        image: kanchakamanupriya/xyztechnologies:latest
+        image: kanchakamanupriya/xyztechnologies:${IMAGE_TAG}
         ports:
         - containerPort: 8080
         imagePullPolicy: Always
