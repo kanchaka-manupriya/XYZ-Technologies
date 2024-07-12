@@ -5,7 +5,6 @@
 
   vars:
     image_name: "kanchakamanupriya/xyztechnologies"
-    image_tag: "latest"
     dockerfile_path: "/opt/war_file"
     dockerhub_username: "kanchakamanupriya"
 
@@ -98,6 +97,9 @@
         kubeconfig: /etc/kubernetes/admin.conf
         definition: "{{ lookup('file', 'deployment.yml') }}"
   
+
+
+
 
 
 
